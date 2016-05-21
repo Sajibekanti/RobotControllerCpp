@@ -4,14 +4,14 @@
 #include <conio.h>
 #include <string.h>
 #include <ctype.h>
-#define SLEEP_TIME_TX 15
+#define SLEEP_TIME_TX 3
 
 SerialPort *arduino;
 
 char direction;
 
-//Bluetooth pairing code
-char *portName = "\\\\.\\COM52";
+//Bluetooth portname
+char *portName = "\\\\.\\COM53";
 
 using namespace std;
 
@@ -22,67 +22,57 @@ char stop_dir[] = "S\n";
 
 void goForward(void)
 {
-    if (arduino->isConnected()){
-        arduino->writeSerialPort(forward_dir, MAX_DATA_LENGTH);
-    }
-    Sleep(SLEEP_TIME_TX);
+	arduino->writeSerialPort(forward_dir, MAX_DATA_LENGTH);
 }
 
 void goLeft(void)
 {
-    if (arduino->isConnected()){
-        arduino->writeSerialPort(left_dir, MAX_DATA_LENGTH);
-    }
-    Sleep(SLEEP_TIME_TX);
+	arduino->writeSerialPort(left_dir, MAX_DATA_LENGTH);
 }
 
 void goRight(void)
 {
-    if (arduino->isConnected()){
-        arduino->writeSerialPort(right_dir, MAX_DATA_LENGTH);
-    }
-    Sleep(SLEEP_TIME_TX);
+	arduino->writeSerialPort(right_dir, MAX_DATA_LENGTH);
 }
 
 void goNowhere(void)
 {
-    if (arduino->isConnected()){
-        arduino->writeSerialPort(stop_dir, MAX_DATA_LENGTH);
-    }
-    Sleep(SLEEP_TIME_TX);
+	arduino->writeSerialPort(stop_dir, MAX_DATA_LENGTH);
 }
 
 int main()
 {
-    arduino = new SerialPort(portName);
+	arduino = new SerialPort(portName);
 
-    if (arduino->isConnected()) cout << "Connection Established!" << endl;
+	if (arduino->isConnected()) cout << "Connection Established!" << endl;
 
 
-    while (arduino->isConnected()){
-        cout << "Direction: " << endl;
+	while (arduino->isConnected()) {
+		cout << "Direction: " << endl;
 
-        //Getting input without echoing
-        //direction = _getch();
+		//Getting input without echoing
+		//direction = _getch();
 
-        cin >> direction;
+		cin >> direction;
 
-        switch(direction)
-        {
-        case 'f':
-            goForward();
-            break;
-        case 'l':
-            goLeft();
-            break;
-        case 'r':
-            goRight();
-            break;
-        default:
-            goNowhere();
-            break;
-        }
-    }
+		switch (direction)
+		{
+		case 'f':
+			goForward();
+			break;
+		case 'l':
+			goLeft();
+			break;
+		case 'r':
+			goRight();
+			break;
+		default:
+			goNowhere();
+			break;
+		}
 
-    delete arduino;
+		Sleep(SLEEP_TIME_TX);
+	}
+
+	delete arduino;
 }
