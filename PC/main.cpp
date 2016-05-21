@@ -4,7 +4,7 @@
 #include <conio.h>
 #include <string.h>
 #include <ctype.h>
-#define SLEEP_TIME_TX 10
+#define SLEEP_TIME_TX 15
 
 SerialPort *arduino;
 
@@ -63,7 +63,9 @@ int main()
         cout << "Direction: " << endl;
 
         //Getting input without echoing
-        direction = _getch();
+        //direction = _getch();
+
+        cin >> direction;
 
         switch(direction)
         {
